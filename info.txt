@@ -1,0 +1,22 @@
+28-09-2021
+
+chunk done 0 50000
+chunk done 1 50000
+chunk done 2 50000
+chunk done 3 50000
+chunk done 4 50000
+chunk done 5 50000
+chunk done 6 50000
+chunk done 7 50000
+chunk done 8 50000
+chunk done 9 50000
+chunk done 10 50000
+chunk done 11 50000
+chunk done 12 50000
+chunk done 13 50000
+chunk done 14 34817
+chunk done 15 42
+chunk done 16 4
+chunk done 17 3
+chunk done 18 1
+script done
