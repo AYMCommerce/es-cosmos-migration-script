@@ -8,11 +8,22 @@ const path = `../records/${ENVIRONMENT}/personalized-rewards`;
 
 const { downloadRecords, migrateRecords } = require("../lib");
 
+function transform(personalizedReward) {
+  delete personalizedReward._id;
+  delete personalizedReward.locale;
+
+  personalizedReward.programcode = "ES";
+
+  personalizedReward.migrated = true;
+
+  return personalizedReward;
+}
+
 async function start() {
   if (MODE === "download") {
-    downloadRecords(path, PersonalizedRewardsT1);
+    await downloadRecords(path, PersonalizedRewardsT1);
   } else if (MODE === "migrate") {
-    await migrateRecords(path, PersonalizedRewardsT2);
+    await migrateRecords(path, PersonalizedRewardsT2, transform);
   }
 }
 

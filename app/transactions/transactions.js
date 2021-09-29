@@ -8,11 +8,23 @@ const path = `../records/${ENVIRONMENT}/transactions`;
 
 const { downloadRecords, migrateRecords } = require("../lib");
 
+function transformTransaction(transaction) {
+  delete transaction._id;
+  delete transaction.locale;
+  delete transaction.id;
+
+  transaction.programcode = "ES";
+
+  transaction.migrated = true;
+
+  return transaction;
+}
+
 async function start() {
   if (MODE === "download") {
-    downloadRecords(path, TransactionsT1);
+    await downloadRecords(path, TransactionsT1);
   } else if (MODE === "migrate") {
-    await migrateRecords(path, TransactionsT2);
+    await migrateRecords(path, TransactionsT2, transformTransaction);
   }
 }
 

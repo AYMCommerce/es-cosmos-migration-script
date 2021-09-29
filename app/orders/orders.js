@@ -8,11 +8,22 @@ const path = `../records/${ENVIRONMENT}/orders`;
 
 const { downloadRecords, migrateRecords } = require("../lib");
 
+function transformOrders(order) {
+  delete order._id;
+  delete order.locale;
+
+  order.programcode = "ES";
+
+  order.migrated = true;
+
+  return order;
+}
+
 async function start() {
   if (MODE === "download") {
-    downloadRecords(path, OrdersT1);
+    await downloadRecords(path, OrdersT1);
   } else if (MODE === "migrate") {
-    await migrateRecords(path, OrdersT2);
+    await migrateRecords(path, OrdersT2, transformOrders);
   }
 }
 

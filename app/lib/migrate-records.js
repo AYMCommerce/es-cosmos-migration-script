@@ -1,18 +1,6 @@
 const { readdir } = require("fs/promises");
 
-function transformTransaction(transaction) {
-  delete transaction._id;
-  delete transaction.locale;
-  delete transaction.id;
-
-  transaction.programcode = "ES";
-
-  transaction.migrated = true;
-
-  return transaction;
-}
-
-async function migrateData(records, model2) {
+async function migrateData(records, model2, transform) {
   console.log("migration started");
 
   let insertRecords = [];
@@ -20,7 +8,7 @@ async function migrateData(records, model2) {
   for (const [i, record] of records.entries()) {
     console.log(i, record);
 
-    const newRecord = transformTransaction(record);
+    const newRecord = transform(record);
 
     insertRecords.push(newRecord);
 
@@ -34,7 +22,7 @@ async function migrateData(records, model2) {
   }
 }
 
-async function migrate(path, model2) {
+async function migrate(path, model2, transform) {
   try {
     const dir = await readdir(path);
 
@@ -45,7 +33,7 @@ async function migrate(path, model2) {
         console.log(file, records.length);
 
         if (records.length > 0) {
-          await migrateData(records, model2);
+          await migrateData(records, model2, transform);
         }
       }
     }

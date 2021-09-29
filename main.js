@@ -2,7 +2,9 @@ const dotenv = require("dotenv");
 
 dotenv.config({ path: "./.env_prod" });
 
-const transactionsStart = require("./transactions/transactions");
+const fs = require("fs/promises");
+
+const transactionsStart = require("./app/transactions/transactions");
 
 const checkConnectivity = async () => {
   try {
